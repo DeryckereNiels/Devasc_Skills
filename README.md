@@ -35,4 +35,26 @@
     * screenshot Task2.png
 
 **Docker**
+* Task preparation:
+    * create Dockerfile in Devasc_Skills directory: touch Dockerfile
+    *
+    
+* Task implementation:
+    * add neccesary config commands:
+      * FROM debian
+      * RUN apt-get update
+      * RUN apt-get install -y apache2
+      * EXPOSE 8081
+    * build the docker container: docker build -t apache2_image .
+    
+
+* Task troubleshooting:
+    * Problem: apache2 needs to install tzdata which gives a prompt for region verifications, this stops the build of the image
+    * Solution: install tzdata seperately so it install with default settings
+               
+    * Problem: When starting a container based on the image, the docker container shuts down
+    * Solution: When starting the apache2 service, it has to be run in the foreground. This is due to the way processes are handled
+* Task verification:
+    * screenshot Task3.png
+
 
