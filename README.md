@@ -57,4 +57,20 @@
 * Task verification:
     * screenshot Task3.png
 
+** Jenkins **
+* Task preparation:
+  * build and run jenkins docker container
+* Task implementation
+  * create a job for building the apache2 image and run a container based on it: BuildApache2Container 
+  * The job referenced my remote github repository, clones it in the jenkins_container and then user the Dockerfile
+  * create a job for testing: TestappJob => in this job I fetch the apache start page with curl and check if "Ubuntu Apache Default page" is present
+  * create a pipeline with the BuildApache2Container and the TestAppJob
+* Task troubleshooting:
+  *Problem: I had problems with the assignments of portnumbers. port 8081 was in use but i couldn't find any container using it.
+  *Solution: I checked via the command netstat which service was using it and then i shut down that service
+
+  *Problem: portmapping is incorrectly configured
+  *Solution: after searching for a while I realized that the apache2 port.conf file had to be changed to reflect the correct port mapping
+   I used the command Apache2 sed -i '0,/Listen [0-9]*/s//Listen 8081/' /etc/apache2/ports.conf
+
 
