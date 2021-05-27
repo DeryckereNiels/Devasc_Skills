@@ -2,6 +2,7 @@
 import requests
 import json
 from os import walk
+from requests_toolbelt.multipart.encoder import MultipartEncoder
 access_token= "YTg0NmQxMzEtYmM4Ny00YTkwLWI3OTYtNTlhMDEwNDJiYzA1Y2E2ZWM2YTktNmEz_PF84_consumer"
 #person_id="Y2lzY29zcGFyazovL3VzL1BFT1BMRS9hYjJjZTU2NC1hNzliLTQ5YzUtODIzYS05MmNlYzQ5NjI5MGY"
 
@@ -52,31 +53,35 @@ def postFiles(room_id):
     mypath=".//"
     for (dirpath,dirnames,filenames) in walk(mypath):
         f.extend(filenames)
-        for i in f:
-            if ".png" in i:
+    for i in f:
+        if ".png" in i:
             
-                m = MultipartEncoder({'roomId': room_id,
+            m = MultipartEncoder({'roomId': room_id,
                       'text': 'example attached',
                       'files':(i, open(i, 'rb'),
                       'image/png')})
-                headers= {
+            headers= {
             "Authorization":"Bearer {}".format(access_token),
             "Content-Type":m.content_type
              } 
-                resp=requests.post(messageurl,headers=headers,data=m)
-                print(resp.status_code)    
+            resp=requests.post(messageurl,headers=headers,data=m)
+            print(resp.status_code)    
 
-def postMessage(room_id)
+def postMessage(room_id):
     
     message = "Here are my screenshots of netacad-devasc skills-based exam"
+    message2 ="This is my github repo url:https://github.com/DeryckereNiels/Devasc_Skills.git"
     url = 'https://webexapis.com/v1/messages'
     headers = {
     'Authorization': 'Bearer {}'.format(access_token),
     'Content-Type': 'application/json'
     }
     params = {'roomId': room_id, 'text': message}
+    params2 = {'roomId': room_id, 'text': message2}
     res = requests.post(url, headers=headers, json=params)
+    resp2= requests.post(url,headers=headers,json=params2)
     print(res.json())
+    print (resp2.json())
 
 if __name__ == "__main__":
     createSpace()
